@@ -9,7 +9,7 @@ success_return2 = "To http"
 i = 1
 while not success:
 	print("start", i, "th git push.")
-	os.system("git push origin release-2.2.2 > git_push_result.txt 2>&1")
+	os.system("git push > git_push_result.txt 2>&1")
 	git_push_result = io.open('git_push_result.txt', encoding='UTF-8', errors='ignore')
 	line = git_push_result.readlines()
 	for every_line in line:
