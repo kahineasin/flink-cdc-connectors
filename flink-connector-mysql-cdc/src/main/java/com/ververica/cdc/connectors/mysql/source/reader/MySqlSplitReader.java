@@ -65,6 +65,9 @@ public class MySqlSplitReader implements SplitReader<SourceRecord, MySqlSplit> {
         this.subtaskId = subtaskId;
         this.splits = new ArrayDeque<>();
         this.context = context;
+        //        if(null!=sourceConfig.getServerId()){//benjamin
+        //            LOG.info("MySqlSplitReader serverId: "+sourceConfig.getServerId());
+        //        }
     }
 
     @Override

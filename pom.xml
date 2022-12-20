@@ -29,15 +29,15 @@ under the License.
 
     <groupId>com.ververica</groupId>
     <artifactId>flink-cdc-connectors</artifactId>
-    <version>2.2.1</version>
+    <version>2.2.4</version>
     <packaging>pom</packaging>
 
     <modules>
-     <!--   <module>flink-cdc-base</module>
+        <module>flink-cdc-base</module>
         <module>flink-connector-debezium</module>
-        <module>flink-connector-test-util</module>-->
+        <module>flink-connector-test-util</module>
         <module>flink-connector-mysql-cdc</module>
-       <!-- <module>flink-connector-postgres-cdc</module>
+        <module>flink-connector-postgres-cdc</module>
         <module>flink-connector-oracle-cdc</module>
         <module>flink-connector-mongodb-cdc</module>
         <module>flink-connector-oceanbase-cdc</module>
@@ -50,7 +50,7 @@ under the License.
         <module>flink-sql-connector-oceanbase-cdc</module>
         <module>flink-sql-connector-sqlserver-cdc</module>
         <module>flink-sql-connector-tidb-cdc</module>
-        <module>flink-cdc-e2e-tests</module>-->
+        <module>flink-cdc-e2e-tests</module>
     </modules>
 
     <licenses>
@@ -61,15 +61,28 @@ under the License.
         </license>
     </licenses>
 
+    <!--    <distributionManagement>
+            <snapshotRepository>
+                <id>oss</id>
+                <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            </snapshotRepository>
+            <repository>
+                <id>oss</id>
+                <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            </repository>
+        </distributionManagement>-->
+
     <distributionManagement>
-        <snapshotRepository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
         <repository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>nexus-releases</id>
+            <name>maven-releases</name>
+            <url>http://192.168.0.10:18081/nexus/repository/maven-releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>maven-snapshots</name>
+            <url>http://192.168.0.10:18081/nexus/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>

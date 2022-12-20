@@ -17,11 +17,15 @@ import org.apache.kafka.connect.data.Field;
 
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjuster;
 import java.util.List;
+import java.util.TimeZone;
 
 /** fix bug mysql Datetime timeZone bug on MySqlValueConverters. */
 public class PFMySqlValueConverters extends MySqlValueConverters {
+    private TimeZone srcDbTimeZone = null;
+
     public PFMySqlValueConverters(
             DecimalMode decimalMode,
             TemporalPrecisionMode temporalPrecisionMode,
@@ -54,6 +58,24 @@ public class PFMySqlValueConverters extends MySqlValueConverters {
                 binaryMode,
                 adjuster,
                 parsingErrorHandler);
+    }
+
+    public PFMySqlValueConverters(
+            DecimalMode decimalMode,
+            TemporalPrecisionMode temporalPrecisionMode,
+            BigIntUnsignedMode bigIntUnsignedMode,
+            CommonConnectorConfig.BinaryHandlingMode binaryMode,
+            TemporalAdjuster adjuster,
+            ParsingErrorHandler parsingErrorHandler,
+            String srcDbTimeZone) {
+        super(
+                decimalMode,
+                temporalPrecisionMode,
+                bigIntUnsignedMode,
+                binaryMode,
+                adjuster,
+                parsingErrorHandler);
+        this.srcDbTimeZone = null == srcDbTimeZone ? null : TimeZone.getTimeZone(srcDbTimeZone);
     }
 
     @Override
@@ -161,6 +183,13 @@ public class PFMySqlValueConverters extends MySqlValueConverters {
                                     if (null != data && data instanceof Timestamp) {
 
                                         return ((Timestamp) data).getTime();
+                                    } else if (null != data
+                                            && null != srcDbTimeZone
+                                            && data instanceof LocalDateTime) {
+                                        return ((LocalDateTime) data)
+                                                .atZone(srcDbTimeZone.toZoneId())
+                                                .toInstant()
+                                                .toEpochMilli();
                                     }
                                     return data;
                                 }))

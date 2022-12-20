@@ -102,6 +102,10 @@ public class MySqlSource<T>
 
     private final MySqlSourceConfigFactory configFactory;
     private final DebeziumDeserializationSchema<T> deserializationSchema;
+    /** 为了测试slaveId重复的问题.注意不能这样写,因为MySqlSource要求是Serializable. -- benjamin20221118 */
+    // private Consumer<String> mysqlServerIdChange = null;
+    /** 这样也不行,在主程序中读到的值是null的 */
+    // private String mysqlServerId = null;
 
     /**
      * Get a MySqlParallelSourceBuilder to build a {@link MySqlSource}.
@@ -165,11 +169,36 @@ public class MySqlSource<T>
                 sourceConfig);
     }
 
+    //    /**
+    //     * 为了测试slaveId重复的问题. -- benjamin20221118
+    //     *
+    //     * @param sourceConfig
+    //     */
+    //    private void handleServerIdChange(MySqlSourceConfig sourceConfig) {
+    //        //        if (null != mysqlServerIdChange) {
+    //        //            String serverId =
+    //        // sourceConfig.getDbzProperties().getProperty("database.server.id");
+    //        //            if (null != serverId && (!"".equals(serverId))) {
+    //        //                mysqlServerIdChange.accept(serverId);
+    //        //            }
+    //        //        }
+    //        if (null == mysqlServerId) {
+    //            mysqlServerId = sourceConfig.getDbzProperties().getProperty("database.server.id");
+    //        }
+    //    }
+
+    //    public void setServerIdChange(Consumer<String> mysqlServerIdChange) {
+    //        this.mysqlServerIdChange = mysqlServerIdChange;
+    //    }
+    //    public String getMysqlServerId() {
+    //        return mysqlServerId;
+    //    }
+
     @Override
     public SplitEnumerator<MySqlSplit, PendingSplitsState> createEnumerator(
             SplitEnumeratorContext<MySqlSplit> enumContext) {
         MySqlSourceConfig sourceConfig = configFactory.createConfig(0);
-
+        // handleServerIdChange(sourceConfig);
         final MySqlValidator validator = new MySqlValidator(sourceConfig);
         validator.validate();
 
@@ -199,7 +228,7 @@ public class MySqlSource<T>
     public SplitEnumerator<MySqlSplit, PendingSplitsState> restoreEnumerator(
             SplitEnumeratorContext<MySqlSplit> enumContext, PendingSplitsState checkpoint) {
         MySqlSourceConfig sourceConfig = configFactory.createConfig(0);
-
+        // handleServerIdChange(sourceConfig);
         final MySqlSplitAssigner splitAssigner;
         if (checkpoint instanceof HybridPendingSplitsState) {
             splitAssigner =

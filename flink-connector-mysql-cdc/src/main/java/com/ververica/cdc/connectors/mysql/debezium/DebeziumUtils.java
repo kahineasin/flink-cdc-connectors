@@ -144,13 +144,16 @@ public class DebeziumUtils {
 
         boolean timeAdjusterEnabled =
                 dbzMySqlConfig.getConfig().getBoolean(MySqlConnectorConfig.ENABLE_TIME_ADJUSTER);
+        String timeZone = null;
+        timeZone = dbzMySqlConfig.getConfig().getString("database.serverTimezone");
         return new PFMySqlValueConverters(
                 decimalMode,
                 timePrecisionMode,
                 bigIntUnsignedMode,
                 dbzMySqlConfig.binaryHandlingMode(),
                 timeAdjusterEnabled ? MySqlValueConverters::adjustTemporal : x -> x,
-                MySqlValueConverters::defaultParsingErrorHandler);
+                MySqlValueConverters::defaultParsingErrorHandler,
+                timeZone);
     }
 
     public static List<TableId> discoverCapturedTables(

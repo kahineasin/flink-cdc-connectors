@@ -21,17 +21,17 @@ under the License.
     <parent>
         <artifactId>flink-cdc-connectors</artifactId>
         <groupId>com.ververica</groupId>
-        <version>2.2.1</version>
+        <version>2.2.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>flink-connector-mysql-cdc</artifactId>
     <name>flink-connector-mysql-cdc</name>
-    <version>2.2.3</version>
+    <version>2.2.4</version>
     <packaging>jar</packaging>
 
     <properties>
-        <old-cdc.version>2.2.1</old-cdc.version>
+        <old-cdc.version>2.2.4</old-cdc.version>
     </properties>
     <dependencies>
 
@@ -39,23 +39,23 @@ under the License.
         <dependency>
             <groupId>com.ververica</groupId>
             <artifactId>flink-connector-debezium</artifactId>
- <!--           <version>${project.version}</version>-->
-            <version>${old-cdc.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>kafka-log4j-appender</artifactId>
-                    <groupId>org.apache.kafka</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+            <version>${project.version}</version>
+        <!-- <version>${old-cdc.version}</version>-->
+         <exclusions>
+             <exclusion>
+                 <artifactId>kafka-log4j-appender</artifactId>
+                 <groupId>org.apache.kafka</groupId>
+             </exclusion>
+         </exclusions>
+     </dependency>
 
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-connector-mysql</artifactId>
-            <version>${debezium.version}</version>
-        </dependency>
+     <dependency>
+         <groupId>io.debezium</groupId>
+         <artifactId>debezium-connector-mysql</artifactId>
+         <version>${debezium.version}</version>
+     </dependency>
 
-        <!-- geometry dependencies -->
+     <!-- geometry dependencies -->
         <dependency>
             <groupId>com.esri.geometry</groupId>
             <artifactId>esri-geometry-api</artifactId>
@@ -85,27 +85,27 @@ under the License.
         <dependency>
             <groupId>com.ververica</groupId>
             <artifactId>flink-connector-test-util</artifactId>
-<!--            <version>${project.version}</version>-->
-            <version>${old-cdc.version}</version>
-            <scope>test</scope>
-        </dependency>
+           <version>${project.version}</version>
+        <!--  <version>${old-cdc.version}</version>-->
+         <scope>test</scope>
+     </dependency>
 
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-core</artifactId>
-            <version>${debezium.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
+     <dependency>
+         <groupId>io.debezium</groupId>
+         <artifactId>debezium-core</artifactId>
+         <version>${debezium.version}</version>
+         <type>test-jar</type>
+         <scope>test</scope>
+     </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.78</version>
-            <scope>test</scope>
-        </dependency>
+     <dependency>
+         <groupId>com.alibaba</groupId>
+         <artifactId>fastjson</artifactId>
+         <version>1.2.78</version>
+         <scope>test</scope>
+     </dependency>
 
-        <!-- test dependencies on Flink -->
+     <!-- test dependencies on Flink -->
 
         <dependency>
             <groupId>org.apache.flink</groupId>

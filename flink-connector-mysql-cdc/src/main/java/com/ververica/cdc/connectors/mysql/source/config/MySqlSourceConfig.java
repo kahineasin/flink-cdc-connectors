@@ -44,6 +44,8 @@ public class MySqlSourceConfig implements Serializable {
     private final List<String> databaseList;
     private final List<String> tableList;
     @Nullable private final ServerIdRange serverIdRange;
+
+    // private final String serverId;
     private final StartupOptions startupOptions;
     private final int splitSize;
     private final int splitMetaGroupSize;
@@ -110,6 +112,7 @@ public class MySqlSourceConfig implements Serializable {
         this.dbzConfiguration = Configuration.from(dbzProperties);
         this.dbzMySqlConfig = new MySqlConnectorConfig(dbzConfiguration);
         this.jdbcProperties = jdbcProperties;
+        // this.serverId=dbzProperties.containsKey("database.server.id")?dbzProperties.getProperty("database.server.id"):null;//benjamin
     }
 
     public String getHostname() {
@@ -208,4 +211,11 @@ public class MySqlSourceConfig implements Serializable {
     public Properties getJdbcProperties() {
         return jdbcProperties;
     }
+    //    public String getServerId() {
+    //        return serverId;
+    //    }
+    //
+    //    public void setServerId(String serverId) {
+    //        this.serverId = serverId;
+    //    }
 }
