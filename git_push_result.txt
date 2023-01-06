@@ -1,0 +1,4 @@
+fatal: helper error (-1): User cancelled dialog.
+bash: line 1: /dev/tty: No such device or address
+error: failed to execute prompt script (exit code 1)
+fatal: could not read Username for 'https://github.com': No such file or directory
